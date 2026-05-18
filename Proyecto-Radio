@@ -1,0 +1,139 @@
+#include <stdio.h> 
+int oyentes =0; 
+int primero, segundo;
+int votos[100][3];
+int sumas[10]= {0};
+int puntosOyentes[100] = {0};
+void VOTOS ();
+void suma ();
+void win ();
+void premio ();
+int main () 
+{ 
+    char rolas[10][300] = { 
+        "1.- Let it be- The Beatles.", "2.- Little by little- Oasis.","3.- Crystal- Elton John.", "4.- Rhiannon Moon (Will You Ever Win)- Fleetwood Mac.", "5.- Mardy Bum- Artic Monkeys.", "6.- Bad decisions- The Strokes.", "7.- Vienna- Billy Joel.", "8.- The Prettiest Star- David Bowie", "9.- Canyon Moon- Harry Styles", "10.-Good Old Fashioned Lover Boy-Queen" 
+        
+    }; 
+    printf ("Bienvenidos al concurso de 10 canciones al azar, vota por tu favorita.\n A continuación, te mostraemos el recap de las canciones en inglés más escuchadas de lo que va del año.\n\n");
+    for (int c=0; c<=9; c++) 
+    { 
+        printf ("%s\n", rolas[c]); 
+    }
+    printf ("\n¿Estás listo para escoger tus tres canciones favoritas? Recuerda anotar unicamente el numero correspondiente a la cancion y ordenalo en forma de top\n");
+    VOTOS();
+     suma();
+     win();
+     premio();
+        return 0; 
+}
+    void VOTOS()
+    
+    {
+      while (oyentes<=99) {
+      printf (" \n-----oyente %d-----\n ", oyentes +1);
+      printf ("\nvoto 1: "); 
+      scanf ("%d", &votos[oyentes][0]);
+      printf ("\nvoto 2: ");
+      scanf ("%d", &votos[oyentes][1]);
+      printf ("\nvoto 3: "); 
+      scanf ("%d", &votos[oyentes][2]);
+      if (votos[oyentes][0]==-1)
+      {
+      break;
+      }
+      oyentes++; 
+      }
+      }
+      void suma () 
+      {
+            for (int i= 0; i < oyentes; i++)
+{
+    sumas[votos[i][0]]= sumas[votos[i][0]]+3;
+    sumas[votos[i][1]]= sumas[votos[i][1]]+2;
+    sumas[votos[i][2]]= sumas[votos[i][2]]+1;
+}
+         for (int i=1; i<=10;  i++)
+         
+         { 
+             printf ("\n\npuntos de la canción numero %d: %d\n", i, sumas[i]);
+         }
+    
+          
+      }
+      
+          void win()
+{
+    int mayor= -1, segundoMayor= -1;
+
+    for (int i= 1; i<= 10; i++)
+    {
+        if (sumas[i]> mayor)
+        {
+            segundoMayor= mayor;
+            segundo= primero;
+
+            mayor= sumas[i];
+            primero= i;
+        }
+        else if (sumas[i] > segundoMayor)
+        {
+            segundoMayor = sumas[i];
+            segundo= i;
+        }
+    }
+
+    printf("\n\nPrimera cancion mas votada: %d", primero);
+    printf("\nSegunda cancion mas votada: %d", segundo);
+}
+void premio()
+{
+    int ganador= 0;
+    int mayorPuntos= -1;
+
+    for (int i= 0; i< oyentes; i++)
+    {
+        int acertoPrimera= 0;
+        int acertoSegunda= 0;
+
+        for (int j=0; j<3; j++)
+        {
+            int cancion=votos[i][j];
+
+            if (cancion== primero)
+            {
+                acertoPrimera = 1;
+            }
+
+            if (cancion== segundo)
+            {
+                acertoSegunda= 1;
+            }
+        }
+
+        if (acertoPrimera== 1)
+        {
+            puntosOyentes[i]+= 30;
+        }
+
+        if (acertoSegunda==1)
+        {
+            puntosOyentes[i] += 20;
+        }
+
+        if (acertoPrimera==1 && acertoSegunda == 1)
+        {
+            puntosOyentes[i]+= 10;
+        }
+
+        printf("\nOyente %d: %d puntos",i+ 1, puntosOyentes[i]);
+
+        if (puntosOyentes[i]>mayorPuntos)
+        {
+            mayorPuntos= puntosOyentes[i];
+            ganador= i;
+        }
+    }
+
+    printf("\n\nGanador: oyente numero %d\n\n", ganador+ 1);
+    printf ("Muchas gracias por paticipar. Felicidades a los ganadores!!!!");
+}
